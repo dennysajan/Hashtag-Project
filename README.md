@@ -1,1 +1,2 @@
-# Social-Justice-Discourse
+# Indexing Social Justice Discourse Through Hashtags 
+This project aims to develop a web-based indexing platform that will track the public dialogue/discourse on social justice activism. The platform development activities will include: • Developing a component that pulls data from social media websites (e.g., Twitter), news outlets, and research publication venues. • Developing Data Analytics and Data Mining components to identify data relevant to social activism. • Developing UI/UX for the web-based platform so as to disseminate the gathered information.        
