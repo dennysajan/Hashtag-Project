@@ -1,0 +1,22 @@
+{
+  "name": "hashtag-project-prototype-nodejs",
+  "version": "0.0.1",
+  "description": "hashtag project prototype using nodejs",
+  "main": "twit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennysajan/Hashtag-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dennysajan/Hashtag-Project/issues"
+  },
+  "homepage": "https://github.com/dennysajan/Hashtag-Project#readme",
+  "dependencies": {
+    "twit": "^2.2.11"
+  }
+}
