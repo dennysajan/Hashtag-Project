@@ -2,9 +2,9 @@
   "name": "hashtag-project-prototype-nodejs",
   "version": "0.0.1",
   "description": "hashtag project prototype using nodejs",
-  "main": "twit.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:server": "nodemon --ignore sessions/ server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,15 @@
   },
   "homepage": "https://github.com/dennysajan/Hashtag-Project#readme",
   "dependencies": {
-    "twit": "^2.2.11"
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "session-file-store": "^1.2.0",
+    "twit": "^2.2.11",
+    "uuid": "^3.3.2"
   }
 }
