@@ -1,5 +1,4 @@
 node_modules
 sessions
-config/twKeys.js
 cookie-file.txt
 .env
