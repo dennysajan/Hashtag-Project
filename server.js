@@ -8,6 +8,11 @@ const LocalStrategy = require("passport-local").Strategy;
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
 
+
+//import schemas
+const User = require("./models/User");
+const Tweet = require("./models/Tweet");
+
 //passport config
 passport.use(
   new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
@@ -94,6 +99,10 @@ app.get("/protected", (req, res) => {
     res.redirect("/");
   }
 });
+
+app.get("/api/gettweets", (req, res)=>{
+
+})
 
 const port = process.env.port || 5000;
 app.listen(port, () => {
