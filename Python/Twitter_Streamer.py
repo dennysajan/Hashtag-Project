@@ -14,8 +14,12 @@ This code will work with Python 3.7.1
 
 class StdOutListener(StreamListener):
     def on_data(self, data):
+        json_data = json.loads(data)
+        print("===================================================")
         print(data)
-
+        print(json_data["id_str"])
+        print(json_data["text"])
+        print("===================================================")
         return True
 
     def on_error(self, status_code):
