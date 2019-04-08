@@ -131,7 +131,7 @@ app.get("/api/gettw", (_req, _res) => {
     //parameters
     {
       q: "#metoo",
-      count: 10
+      count: 100
     },
 
     //response
@@ -139,7 +139,7 @@ app.get("/api/gettw", (_req, _res) => {
       if (err) console.log(err);
       else {
         data.statuses.forEach(tw => {
-          Tweet.find({ tweet_id: tw.id }).then(exists => {
+          Tweet.findOne({ tweet_id: tw.id }).then(exists => {
             if (exists) {
               //skip
             } else {
@@ -172,10 +172,7 @@ app.get("/api/gettw", (_req, _res) => {
                 retweeted_status
               });
 
-              newTweet.save().then(tw => {
-                console.log("tweet saved");
-                console.log(JSON.stringify(tw));
-              });
+              newTweet.save().then(tw => {});
             }
           });
         });
