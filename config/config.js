@@ -4,5 +4,6 @@ module.exports = {
   key: process.env.KEY,
   secret: process.env.SECRET,
   accessToken: process.env.ACCESSTOKEN,
-  accessTokenSecret: process.env.ACCESSTOKENSECRET
+  accessTokenSecret: process.env.ACCESSTOKENSECRET,
+  mongoURI: process.env.mongoURI
 };

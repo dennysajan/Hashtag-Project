@@ -7,7 +7,26 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
+const Twit = require("twit");
+const keys = require("./config/config");
+
+mongoose
+  .connect(keys.mongoURI, {
+    useNewUrlParser: true
+  })
+  .then(() => {
+    console.log("connected to mongodb");
+  })
+  .catch(err => console.log(err));
+
+var T = new Twit({
+  consumer_key: keys.key,
+  consumer_secret: keys.secret,
+  access_token: keys.accessToken,
+  access_token_secret: keys.accessTokenSecret
+});
 
 //import schemas
 const User = require("./models/User");
@@ -64,6 +83,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+////////////
+// ROUTES //
+////////////
+
 app.get("/", (req, res) => {
   res.send(`hit home page`);
 });
@@ -100,9 +123,67 @@ app.get("/protected", (req, res) => {
   }
 });
 
-app.get("/api/gettweets", (req, res)=>{
+app.get("/api/gettw", (_req, _res) => {
+  T.get(
+    //request type
+    "search/tweets",
 
-})
+    //parameters
+    {
+      q: "#metoo",
+      count: 10
+    },
+
+    //response
+    (err, data, res) => {
+      if (err) console.log(err);
+      else {
+        data.statuses.forEach(tw => {
+          Tweet.find({ tweet_id: tw.id }).then(exists => {
+            if (exists) {
+              //skip
+            } else {
+              var re_user = {};
+              var retweeted_status = {};
+
+              var user = {
+                user_id: tw.user.id,
+                verified: tw.user.verified
+              };
+              if (tw.retweeted_status) {
+                re_user = {
+                  user_id: tw.retweeted_status.user.id,
+                  verified: tw.retweeted_status.user.verified
+                };
+                retweeted_status = {
+                  tweet_id: tw.retweeted_status.id,
+                  text: tw.retweeted_status.text,
+                  re_user
+                };
+              }
+              var newTweet = new Tweet({
+                tweet_id: tw.id,
+                text: tw.text,
+                hashtags: tw.entities.hashtags,
+                user,
+                retweet_count: tw.retweet_count,
+                favorite_count: tw.favorite_count,
+                lang: tw.lang,
+                retweeted_status
+              });
+
+              newTweet.save().then(tw => {
+                console.log("tweet saved");
+                console.log(JSON.stringify(tw));
+              });
+            }
+          });
+        });
+        _res.status(200).json("tweets saved");
+      }
+    }
+  );
+});
 
 const port = process.env.port || 5000;
 app.listen(port, () => {
