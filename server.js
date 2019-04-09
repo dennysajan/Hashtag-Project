@@ -186,3 +186,10 @@ const port = process.env.port || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+const stream = T.stream("statuses/filter", { track: "#metoo" });
+
+stream.on("tweet", tweet => {
+  console.log(tweet);
+  console.log(`hashtags used: ${JSON.stringify(tweet.entities.hashtags)}`);
+});
