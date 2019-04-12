@@ -192,4 +192,43 @@ const stream = T.stream("statuses/filter", { track: "#metoo" });
 stream.on("tweet", tweet => {
   console.log(tweet);
   console.log(`hashtags used: ${JSON.stringify(tweet.entities.hashtags)}`);
+  Tweet.findOne({ tweet_id: tweet.id }).then(exists => {
+    if (exists) {
+      console.log("tweet exists. skipped.");
+      //skip
+    } else {
+      var re_user = {};
+      var retweeted_status = {};
+
+      var user = {
+        user_id: tweet.user.id,
+        verified: tweet.user.verified
+      };
+      if (tweet.retweeted_status) {
+        re_user = {
+          user_id: tweet.retweeted_status.user.id,
+          verified: tweet.retweeted_status.user.verified
+        };
+        retweeted_status = {
+          tweet_id: tweet.retweeted_status.id,
+          text: tweet.retweeted_status.text,
+          re_user
+        };
+      }
+      var newTweet = new Tweet({
+        tweet_id: tweet.id,
+        text: tweet.text,
+        hashtags: tweet.entities.hashtags,
+        user,
+        retweet_count: tweet.retweet_count,
+        favorite_count: tweet.favorite_count,
+        lang: tweet.lang,
+        retweeted_status
+      });
+
+      newTweet.save().then(tw => {
+        console.log("tweet saved");
+      });
+    }
+  });
 });
