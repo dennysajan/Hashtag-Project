@@ -172,7 +172,6 @@ app.get("/api/gettw", (_req, _res) => {
                 retweeted_status,
                 ts: tw.timestamp_ms
               });
-
               newTweet.save().then(tw => {});
             }
           });
@@ -224,11 +223,12 @@ stream.on("tweet", tweet => {
         retweet_count: tweet.retweet_count,
         favorite_count: tweet.favorite_count,
         lang: tweet.lang,
-        retweeted_status
+        retweeted_status,
+        ts: tweet.timestamp_ms
       });
 
       newTweet.save().then(tw => {
-        console.log("tweet saved");
+        console.log(`tweet saved \n ${tw}`);
       });
     }
   });
