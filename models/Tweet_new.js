@@ -49,7 +49,10 @@ const TweetSchema = new Schema({
         type: Boolean
       }
     }
+  },
+  ts: {
+    type: String
   }
 });
 
-module.exports = Tweet = mongoose.model("tweet", TweetSchema);
+module.exports = Tweet = mongoose.model("tweet_new", TweetSchema);

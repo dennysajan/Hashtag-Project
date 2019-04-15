@@ -30,7 +30,7 @@ var T = new Twit({
 
 //import schemas
 const User = require("./models/User");
-const Tweet = require("./models/Tweet");
+const Tweet = require("./models/Tweet_new");
 
 //passport config
 passport.use(
@@ -169,7 +169,8 @@ app.get("/api/gettw", (_req, _res) => {
                 retweet_count: tw.retweet_count,
                 favorite_count: tw.favorite_count,
                 lang: tw.lang,
-                retweeted_status
+                retweeted_status,
+                ts: tw.timestamp_ms
               });
 
               newTweet.save().then(tw => {});
