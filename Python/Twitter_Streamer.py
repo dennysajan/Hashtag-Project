@@ -5,6 +5,7 @@ from tweepy import StreamListener
 from tweepy import Stream
 
 import json
+import pymongo
 
 """
 For the streamer we will be using Tweepy which is a twitter API wrapper that makes it easier for us to access information on twitter.
@@ -17,8 +18,6 @@ class StdOutListener(StreamListener):
         json_data = json.loads(data)
         print("===================================================")
         print(data)
-        print(json_data["id_str"])
-        print(json_data["text"])
         print("===================================================")
         return True
 
@@ -31,4 +30,4 @@ if __name__ == "__main__":
     auth.set_access_token(twitter_auth.Access_Token, twitter_auth.Access_Token_Secret)
 
     stream = Stream(auth, listener)
-    stream.filter(track=['#metoo'])
+    stream.filter(track=['trump'])
