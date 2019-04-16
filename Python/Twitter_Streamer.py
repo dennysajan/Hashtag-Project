@@ -1,5 +1,3 @@
-import twitter_auth
-
 from tweepy import OAuthHandler
 from tweepy import StreamListener
 from tweepy import Stream
@@ -26,8 +24,8 @@ class StdOutListener(StreamListener):
 
 if __name__ == "__main__":
     listener = StdOutListener()
-    auth = OAuthHandler(twitter_auth.Consumer_API, twitter_auth.Consumer_API_Secret)
-    auth.set_access_token(twitter_auth.Access_Token, twitter_auth.Access_Token_Secret)
+    auth = OAuthHandler(Consumer_API, Consumer_API_Secret)
+    auth.set_access_token(Access_Token, Access_Token_Secret)
 
     stream = Stream(auth, listener)
     stream.filter(track=['trump'])
