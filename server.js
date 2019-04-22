@@ -12,6 +12,9 @@ const mongoose = require("mongoose");
 const Twit = require("twit");
 const keys = require("./config/config");
 
+const stats = require("./routes/api/stats");
+const stream = require("./routes/api/stream");
+
 mongoose
   .connect(keys.mongoURI, {
     useNewUrlParser: true
@@ -20,13 +23,6 @@ mongoose
     console.log("connected to mongodb");
   })
   .catch(err => console.log(err));
-
-var T = new Twit({
-  consumer_key: keys.key,
-  consumer_secret: keys.secret,
-  access_token: keys.accessToken,
-  access_token_secret: keys.accessTokenSecret
-});
 
 //import schemas
 const User = require("./models/User");
@@ -87,6 +83,9 @@ app.use(passport.session());
 // ROUTES //
 ////////////
 
+app.use("/api/stats", stats);
+app.use("/api/stream", stream);
+
 app.get("/", (req, res) => {
   res.send(`hit home page`);
 });
@@ -123,113 +122,7 @@ app.get("/protected", (req, res) => {
   }
 });
 
-app.get("/api/gettw", (_req, _res) => {
-  T.get(
-    //request type
-    "search/tweets",
-
-    //parameters
-    {
-      q: "#metoo",
-      count: 100
-    },
-
-    //response
-    (err, data, res) => {
-      if (err) console.log(err);
-      else {
-        data.statuses.forEach(tw => {
-          Tweet.findOne({ tweet_id: tw.id }).then(exists => {
-            if (exists) {
-              //skip
-            } else {
-              var re_user = {};
-              var retweeted_status = {};
-
-              var user = {
-                user_id: tw.user.id,
-                verified: tw.user.verified
-              };
-              if (tw.retweeted_status) {
-                re_user = {
-                  user_id: tw.retweeted_status.user.id,
-                  verified: tw.retweeted_status.user.verified
-                };
-                retweeted_status = {
-                  tweet_id: tw.retweeted_status.id,
-                  text: tw.retweeted_status.text,
-                  re_user
-                };
-              }
-              var newTweet = new Tweet({
-                tweet_id: tw.id,
-                text: tw.text,
-                hashtags: tw.entities.hashtags,
-                user,
-                retweet_count: tw.retweet_count,
-                favorite_count: tw.favorite_count,
-                lang: tw.lang,
-                retweeted_status,
-                ts: tw.timestamp_ms
-              });
-              newTweet.save().then(tw => {});
-            }
-          });
-        });
-        _res.status(200).json("tweets saved");
-      }
-    }
-  );
-});
-
 const port = process.env.port || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-});
-
-const stream = T.stream("statuses/filter", { track: "#metoo" });
-
-stream.on("tweet", tweet => {
-  console.log(tweet);
-  console.log(`hashtags used: ${JSON.stringify(tweet.entities.hashtags)}`);
-  Tweet.findOne({ tweet_id: tweet.id }).then(exists => {
-    if (exists) {
-      console.log("tweet exists. skipped.");
-      //skip
-    } else {
-      var re_user = {};
-      var retweeted_status = {};
-
-      var user = {
-        user_id: tweet.user.id,
-        verified: tweet.user.verified
-      };
-      if (tweet.retweeted_status) {
-        re_user = {
-          user_id: tweet.retweeted_status.user.id,
-          verified: tweet.retweeted_status.user.verified
-        };
-        retweeted_status = {
-          tweet_id: tweet.retweeted_status.id,
-          text: tweet.retweeted_status.text,
-          re_user
-        };
-      }
-      var newTweet = new Tweet({
-        tweet_id: tweet.id,
-        text: tweet.text,
-        hashtags: tweet.entities.hashtags,
-        user,
-        retweet_count: tweet.retweet_count,
-        favorite_count: tweet.favorite_count,
-        lang: tweet.lang,
-        retweeted_status,
-        ts: tweet.timestamp_ms
-      });
-
-      newTweet.save().then(tw => {
-        console.log(`tweet saved \n ${tw}`);
-      });
-    }
-  });
 });
