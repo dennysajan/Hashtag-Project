@@ -14,7 +14,7 @@ var T = new Twit({
 
 //import schemas
 const Tweet = require("../../models/Tweet_new");
-stream = T.stream("statuses/filter", { track: "#bbmastopsocial" });
+stream = T.stream("statuses/filter", { track: "#metoo" });
 
 router.get("/on", (req, res) => {
   c();
