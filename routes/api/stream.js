@@ -65,11 +65,10 @@ function c() {
           retweeted_status,
           ts: tweet.timestamp_ms
         });
-        console.log(`new tweet. ts: ${newTweet.ts}`);
         // console.log(newTweet);
-        // newTweet.save().then(tw => {
-        //   console.log(`tweet saved \n ${tw}`);
-        // });
+        newTweet.save().then(tw => {
+          console.log(`new tweet. ts: ${tw.ts}`);
+        });
       }
     });
   });

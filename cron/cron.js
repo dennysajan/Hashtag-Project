@@ -19,7 +19,7 @@ const Tweet = require("./models/Tweet_new");
 const Cache = require("./models/DailyCache");
 
 //cron tasks
-cron.schedule("* * * * *", () => {
+cron.schedule("59 23 * * *", () => {
   console.log("======= CRON JOB START =======");
   Cache.find()
     .sort({ last_ts: -1 })
@@ -45,12 +45,12 @@ cron.schedule("* * * * *", () => {
           console.log(cache);
           cache.save().then(() => {
             console.log(
-              `Cron Job finished, cached ${count} on ${date.toLocaleDateString()}\n======= CRON JOB END =======`
+              `Cron Job finished. Cached ${count} on ${date.toString()}\n======= CRON JOB END =======`
             );
           });
         } else {
           console.log(
-            `Cron finished. No new tweets to save. (${count})\n======= CRON JOB END =======`
+            `Cron finished. No new tweets (${count}) to cache on ${date.toString()}\n======= CRON JOB END =======`
           );
         }
       });
@@ -58,5 +58,5 @@ cron.schedule("* * * * *", () => {
 });
 
 app.listen(123, () => {
-  console.log(`CRON JOB Running`);
+  console.log(`CRON App Running`);
 });
