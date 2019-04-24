@@ -9,11 +9,6 @@ const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 
-//cron
-const cron = require("node-cron");
-const fs = require("fs");
-
-const Tweets = require("./models/Tweet_new");
 const keys = require("./config/config");
 
 const stats = require("./routes/api/stats");
@@ -31,7 +26,6 @@ mongoose
 //import schemas
 const User = require("./models/User");
 const Tweet = require("./models/Tweet_new");
-const Cache = require("./models/DailyCache");
 
 //passport config
 
@@ -129,43 +123,6 @@ app.get("/", (req, res) => {
 //     res.redirect("/");
 //   }
 // });
-
-//cron tasks
-cron.schedule("* * * * *", () => {
-  console.log("======= RUNNIG CRON =======");
-  Cache.find()
-    .sort({ ts: -1 })
-    .limit(1)
-    .then(latest => {
-      console.log(`latest cache: ${latest}`);
-      if (!latest[0]) {
-        last_ts = 0;
-      } else {
-        last_ts = latest.last_ts;
-      }
-      console.log(last_ts);
-
-      Tweet.countDocuments({
-        ts: { $gt: last_ts }
-      }).then(count => {
-        if (count > 0) {
-          date = new Date();
-          console.log(`Cron Job finished`);
-          const cache = new Cache({
-            date: date.toLocaleDateString(),
-            count,
-            last_ts: date.getTime()
-          });
-          console.log(cache);
-          cache.save().then(() => {
-            console.log(`Cron Job finished, cached ${count}`);
-          });
-        } else {
-          console.log(`Cron finished. No new tweets to save. (${count})`);
-        }
-      });
-    });
-});
 
 const port = process.env.port || 5000;
 app.listen(port, () => {

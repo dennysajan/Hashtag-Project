@@ -1,0 +1,19 @@
+{
+  "name": "cron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cron.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon cron.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.3",
+    "node-cron": "^2.0.3"
+  }
+}

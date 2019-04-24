@@ -18,7 +18,7 @@ stream = T.stream("statuses/filter", { track: "#metoo" });
 
 router.get("/on", (req, res) => {
   c();
-  stream.start();
+  // stream.start();
   return res.status(200).json("stream turned on");
 });
 
@@ -29,8 +29,8 @@ router.get("/off", (req, res) => {
 
 function c() {
   stream.on("tweet", tweet => {
-    console.log(tweet);
-    console.log(`hashtags used: ${JSON.stringify(tweet.entities.hashtags)}`);
+    // console.log(tweet);
+    // console.log(`hashtags used: ${JSON.stringify(tweet.entities.hashtags)}`);
     Tweet.findOne({ tweet_id: tweet.id }).then(exists => {
       if (exists) {
         console.log("tweet exists. skipped.");
@@ -65,7 +65,8 @@ function c() {
           retweeted_status,
           ts: tweet.timestamp_ms
         });
-        console.log(newTweet);
+        console.log(`new tweet. ts: ${newTweet.ts}`);
+        // console.log(newTweet);
         // newTweet.save().then(tw => {
         //   console.log(`tweet saved \n ${tw}`);
         // });
