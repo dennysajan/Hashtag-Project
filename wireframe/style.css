@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.hero {
+  height: 100vh;
+  background-color: gray;
+  /* align-content: center; */
+}
+
+.title {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  font-size: calc(2vw + 5rem);
+  transform: translate(+50%, -50%);
+}
+.news {
+}
+.news .row {
+}
