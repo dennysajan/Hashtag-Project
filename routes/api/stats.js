@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Tweet = require("../../models/Tweet_new");
+const DailyCache = require("../../models/DailyCache");
 
 router.get("/tw", (req, res) => {
   const data = {};
@@ -46,4 +47,22 @@ router.get("/tw", (req, res) => {
     );
 });
 
+router.get("/daily", (req, res) => {
+  console.log("inside daily");
+  DailyCache.find().then(data => {
+    console.log("found data");
+    console.log(data);
+    result = [];
+    data.forEach(element => {
+      result.push(element.count);
+      console.log(element.count);
+    });
+    res.status(200).json(result);
+  });
+});
+
+function a(param) {}
+
+var a = new Date();
+console.log(a);
 module.exports = router;

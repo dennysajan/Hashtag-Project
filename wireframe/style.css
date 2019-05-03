@@ -16,7 +16,6 @@
   font-size: calc(2vw + 5rem);
   transform: translate(+50%, -50%);
 }
-.news {
-}
 .news .row {
+  height: 50px;
 }
