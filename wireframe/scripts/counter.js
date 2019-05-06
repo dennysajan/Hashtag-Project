@@ -13,4 +13,4 @@ function animateValue(id, start, end, duration) {
   }, stepTime);
 }
 
-animateValue("counter", 0, 500, 1000);
+animateValue("counter", 5000, 11256, 200);

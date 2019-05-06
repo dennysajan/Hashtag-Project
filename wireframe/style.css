@@ -5,17 +5,44 @@
 
 .hero {
   height: 100vh;
-  background-color: gray;
+  background-color: #47475b;
   /* align-content: center; */
 }
 
 .title {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  right: 50%;
+  right: 50%; */
+  /* transform: translate(+50%, -50%); */
   font-size: calc(2vw + 5rem);
-  transform: translate(+50%, -50%);
+  height: 100%;
 }
 .news .row {
   height: 50px;
+}
+.one {
+  height: 100%;
+}
+.two {
+  padding: 0;
+}
+.col-sm-3 {
+  padding: 0 !important;
+}
+
+.img {
+  font-size: 100px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+.graph-section {
+  margin-top: 30em;
+}
+
+.twitter-tweet {
+  width: 80% !important;
+}
+
+.myrow {
+  margin-top: 30em;
 }

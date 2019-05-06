@@ -12,13 +12,24 @@ var chart = new Chart(ctx, {
 
   // The data for our dataset
   data: {
-    labels: ["04/28", "04/29", "04/30", "05/01", "05/02"],
+    labels: [
+      "04/27",
+      "04/28",
+      "04/29",
+      "04/30",
+      "05/01",
+      "05/02",
+      "05/03",
+      "05/04",
+      "05/05",
+      "05/06"
+    ],
     datasets: [
       {
         label: "#MeToo tweets",
         backgroundColor: "rgb(255, 99, 132)",
         borderColor: "rgb(255, 99, 132)",
-        data: getnums(5)
+        data: getnums(10)
       }
     ]
   },
