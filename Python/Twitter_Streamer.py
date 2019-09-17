@@ -1,8 +1,8 @@
 from tweepy import OAuthHandler
 from tweepy import StreamListener
 from tweepy import Stream
-import json
 import os
+import json
 
 CA = os.environ['CA']
 CAS = os.environ['CAS']
@@ -16,8 +16,8 @@ This code will work with Python 3.7.1
 
 class StdOutListener(StreamListener):
     def on_data(self, data):
-        print(data)
-        print()
+        json_data = json.loads(data)
+        print(json_data['id'])
         return True
 
     def on_error(self, status_code):
@@ -29,4 +29,4 @@ if __name__ == "__main__":
     auth.set_access_token(AT, ATS)
 
     stream = Stream(auth, listener)
-    stream.filter()
+    stream.filter(track='trump')
