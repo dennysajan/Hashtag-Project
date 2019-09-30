@@ -24,7 +24,8 @@ This code will work with Python 3.7.1
 class StdOutListener(StreamListener):
     def on_data(self, data):
         json_data_json = json.loads(data)
-        coll.insert_one(json_data_json)
+        print(data)
+        # coll.insert_one(json_data_json)
         return True
 
     def on_error(self, status_code):
@@ -36,4 +37,4 @@ if __name__ == "__main__":
     auth.set_access_token(AT, ATS)
 
     stream = Stream(auth, listener)
-    stream.filter(track='#MoreThanAnAthlete')
+    stream.filter(track=['MoreThanAnAthlete', '#MoreThanAnAthlete', 'metoo', '#metoo'])
