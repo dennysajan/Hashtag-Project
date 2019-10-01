@@ -4,12 +4,14 @@ from tweepy import Stream
 import os
 import json
 import pymongo
-from ast import literal_eval
 
+# Twitter Info
 CA = os.environ['CA']
 CAS = os.environ['CAS']
 AT = os.environ['AT']
 ATS = os.environ['ATS']
+
+# MongoDB connection
 conn = pymongo.MongoClient('localhost', 27017)
 db = conn['twitter']
 coll = db['tweets_MTA']
@@ -24,8 +26,7 @@ This code will work with Python 3.7.1
 class StdOutListener(StreamListener):
     def on_data(self, data):
         json_data_json = json.loads(data)
-        print(data)
-        # coll.insert_one(json_data_json)
+        coll.insert_one(json_data_json)
         return True
 
     def on_error(self, status_code):
@@ -37,4 +38,5 @@ if __name__ == "__main__":
     auth.set_access_token(AT, ATS)
 
     stream = Stream(auth, listener)
-    stream.filter(track=['MoreThanAnAthlete', '#MoreThanAnAthlete', 'metoo', '#metoo'])
+    # stream.filter(track=['MoreThanAnAthlete', '#MoreThanAnAthlete', 'metoo', '#metoo'])
+    stream.filter(track=['trump'])
