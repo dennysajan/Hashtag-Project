@@ -1,9 +1,6 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const cron = require("node-cron");
 const keys = require("../config/config");
-
-const app = express();
 
 mongoose
   .connect(keys.mongoURI, {
@@ -55,8 +52,4 @@ cron.schedule("59 23 * * *", () => {
         }
       });
     });
-});
-
-app.listen(123, () => {
-  console.log(`CRON App Running`);
 });
