@@ -106,7 +106,7 @@ stream.on("tweet", tweet => {
 			});
 
 			newTweet
-			.save()	//Candygram for Mongo
+			.save()	//Candygram for Mongo(DB)
 			.then(tw => {
 				if (logLevel > 1) {
 					console.log(`New Tweet. ts: ${tw.ts}`);
