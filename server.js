@@ -61,7 +61,7 @@ var T = new Twit({
 const Tweet = require("./models/Tweet_new");
 
 //Connect to Twitter stream and set tracked hashtags
-stream = T.stream("statuses/filter", { track: "#metoo" });
+stream = T.stream("statuses/filter", { track: "#metoo, #blacklivesmatter, #metooindia, #metoomosque, #metook12, #solidarityisforwomen, #istandwith, #sowhite, #oscarssowhite, #communicationsowhite, #citeblackwomen, #blackgirlmagic, #baltimore, bringbackourgirls, blacktwitter, #yesallwomen, #morethanawoman" });
 
 stream.on("tweet", tweet => {
 	if (logLevel > 2) {
