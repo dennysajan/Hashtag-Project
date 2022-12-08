@@ -18,7 +18,7 @@
   "homepage": "https://github.com/dennysajan/Hashtag-Project#readme",
   "dependencies": {
     "dotenv": "^7.0.0",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "mongoose": "^5.4.23",
     "twit": "^2.2.11"
   }
